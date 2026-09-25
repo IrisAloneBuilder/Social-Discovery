@@ -231,14 +231,15 @@ export default function LandingPage() {
           <Hero3D />
         </div>
 
-        <section
-          ref={ref}
-          className={`section-1 ${isInView ? "is-visible" : ""}`}
-        >
-          <div className="text-container">
+        <section className="section-1 ">
+          <div
+            ref={ref}
+            className={`text-container ${isInView ? "is-visible" : ""}`}
+          >
             <h1>YOU ARE NOT ALONE.</h1>
             <h2>Find thousands with shared passion and mutual understanding</h2>
           </div>
+          <div className="bg-shadow"></div>
 
           {/* Background Cards Layer */}
           <div className="bg-cards-layer">
