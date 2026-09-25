@@ -1,0 +1,5 @@
+# This directory is a Syncthing folder marker.
+# Do not delete.
+
+folderID: xv9xk-dgvcz
+created: 2026-05-15T22:29:18+05:00

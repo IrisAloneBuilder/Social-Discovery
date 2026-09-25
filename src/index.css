@@ -1,0 +1,218 @@
+ /*Project: Social Discovery */
+ /*File: src/index.css  */
+
+ /* This file is just for settings, variables and animations*/
+
+ /*========================================- SETTINGS & VARIABLES -===================================*/
+ :root {
+   /* All variables */
+   --primary: #00e5ff;
+   --primary-secondary: #74B0E2;
+   --primary-tertiary: #AEDBE1;
+   --primary-quaternary: #0095FF;
+   --primary-quinary: #03498B;
+   --primary-glow: rgba(0, 229, 255, 0.4);
+   --primary-glow-hover: rgba(0, 229, 255, 0.7);
+   /* Backgrounds */
+   --bg-dark: #030712;
+   --bg-card: #0a0c12;
+   /* Typography */
+   --text-main: #ffffff;
+   --text-muted: #8a90a3;
+   --text-dim: #bababa;
+   --text-subtle: #94a3b8;
+   --text-main-oposite: #101010;
+
+   /* Transitions */
+   --transition-fast: all 0.15s ease;
+   --transition-base: all 0.2s ease;
+   --transition-slow: all 0.3s ease;
+   --transition-very-slow: all 1s ease;
+   --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+   --transition-bounce: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+
+   /* Fonts */
+   --sans: system-ui, 'Inter', Roboto, sans-serif;
+   --heading: system-ui, 'Inter', Roboto, sans-serif;
+   --mono: ui-monospace, Consolas, monospace;
+   --Comfortaa: 'Comfortaa', Roboto, sans-serif;
+   --Montserrat: 'Montserrat', Roboto, sans-serif;
+   --Press-Start-2P: 'Press Start 2P', Roboto, sans-serif;
+   --Doto: 'doto', Roboto, sans-serif;
+
+
+
+   /* For text-readablity etc. */
+   font: 18px/145% var(--sans);
+   letter-spacing: 0.18px;
+   color: var(--text);
+   font-synthesis: none;
+   text-rendering: optimizeLegibility;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
+   font-optical-sizing: auto;
+   font-style: normal;
+
+
+   @media (max-width: 1024px) {
+     font-size: 16px;
+   }
+
+   /* h1,h2,p,a {
+    filter: invert(2) brightness(2);
+  } */
+ }
+
+ /* This #root is a id of a div that is inside of body tag everything lives inside this */
+ #root {
+   width: 100%;
+   margin: 0 auto;
+   text-align: center;
+   border-inline: 1px solid var(--border);
+   min-height: 100svh;
+   display: flex;
+   flex-direction: column;
+   box-sizing: border-box;
+ }
+
+ body {
+   margin: 0;
+   overflow-x: hidden;
+   overflow-y: scroll;
+
+ }
+
+ /* Setting fonts size for h1,p and etc. */
+ h1,
+ h2 {
+   font-family: var(--heading);
+   font-weight: 500;
+   color: var(--text-main);
+   font-size: 3.2rem;
+   font-weight: 800;
+   margin-bottom: 1rem;
+ }
+
+ h1 {
+   font-size: 56px;
+   line-height: 1.1;
+   letter-spacing: -1px;
+   margin: 32px 0;
+
+   @media (max-width: 1024px) {
+     font-size: 36px;
+     margin: 20px 0;
+   }
+ }
+
+ h2 {
+   font-size: 24px;
+   line-height: 118%;
+   letter-spacing: -0.24px;
+   margin: 0 0 8px;
+
+   @media (max-width: 1024px) {
+     font-size: 20px;
+   }
+ }
+
+ p {
+   margin: 0;
+   font-size: 1.1rem;
+   color: var(--text-subtle);
+   line-height: 1.5;
+ }
+
+ button {
+   font-size: 0.9rem;
+ }
+
+ a {
+   text-decoration: none;
+ }
+
+ code,
+ .counter {
+   font-family: var(--mono);
+   display: inline-flex;
+   border-radius: 4px;
+   color: var(--text-h);
+ }
+
+ code {
+   font-size: 15px;
+   line-height: 135%;
+   padding: 4px 8px;
+   background: var(--code-bg);
+ }
+
+ a.Multi-color-text,
+ div.Multi-color-text,
+ h1.Multi-color-text,
+ h2.Multi-color-text,
+ h3.Multi-color-text,
+ p.Multi-color-text,
+ span.Multi-color-text {
+   color: transparent;
+   -webkit-text-fill-color: transparent;
+   background: linear-gradient(to right, var(--primary) 50%, var(--primary-quaternary));
+   background-clip: text;
+   -webkit-background-clip: text;
+ }
+
+ /* Custom scrollbar styling */
+ ::-webkit-scrollbar {
+   width: 8px;
+   height: 8px;
+ }
+
+ ::-webkit-scrollbar-track {
+   background: #181825;
+ }
+
+ ::-webkit-scrollbar-thumb {
+   background: #45475a;
+   border-radius: 4px;
+ }
+
+ ::-webkit-scrollbar-thumb:hover {
+   background: #585b70;
+ }
+
+ /*=======================================- ANIMATIONS -==================================*/
+ @keyframes slideUp {
+   0% {
+     opacity: 0;
+     transform: translateY(20px);
+   }
+
+   100% {
+     opacity: 1;
+     transform: translateY(0);
+   }
+ }
+
+ @keyframes float {
+
+   0%,
+   100% {
+     transform: translateY(0);
+   }
+
+   50% {
+     transform: translateY(-10px);
+   }
+ }
+
+ @keyframes pulseGlow {
+
+   0%,
+   100% {
+     box-shadow: 0 0 15px var(--primary-glow);
+   }
+
+   50% {
+     box-shadow: 0 0 30px var(--primary-glow-hover);
+   }
+ }
