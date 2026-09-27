@@ -3,6 +3,8 @@ import Hero3D from "../components/Hero3D/Hero3D";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ArrowDown from "../components/Icons/ArrowDown";
+import VerticalProgress from "../components/VerticalProgress";
+import QuickSignUpPreview from "../components/QuickSignUpPreview.tsx";
 
 import "../Style/LandingPageStyle.scss";
 
@@ -194,8 +196,53 @@ const CARD_POSITIONS = [
   },
 ];
 
+const STEPS_DATA = [
+  { id: 1, title: "Quick Sign up" },
+  { id: 2, title: "Chose your interests tags" },
+  { id: 3, title: "Add Your Socials & Contact Info" },
+  { id: 4, title: "Reach Out & Connect" },
+];
+
 export default function LandingPage() {
   const { ref, isInView } = useInView();
+
+  const scrollToHowItWorks = () => {
+    const element = document.getElementById("how-it-works");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  useEffect(() => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          // Selects all elements with the 'parallax-text' class
+          const parallaxElements =
+            document.querySelectorAll<HTMLElement>(".parallax-text");
+          const windowHeight = window.innerHeight;
+
+          parallaxElements.forEach((el) => {
+            const rect = el.getBoundingClientRect();
+
+            // Run effect only when element is visible on screen
+            if (rect.top < windowHeight && rect.bottom > 0) {
+              const yOffset = (rect.top - windowHeight) * 0.18;
+              el.style.transform = `translate3d(0, ${yOffset}px, 0)`;
+            }
+          });
+
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   return (
     <>
       <header>
@@ -203,7 +250,7 @@ export default function LandingPage() {
       </header>
 
       <main>
-        <div className="hero-section">
+        <div className={`hero-section parallax-text`}>
           <h1>
             FIND YOUR NICHE.{" "}
             <span className="Multi-color-text">CONNECT INSTANTLY.</span>
@@ -214,12 +261,11 @@ export default function LandingPage() {
           </p>
           <div className="buttons-container">
             <button className="dashboard-btn">Launch Dashboard ✦</button>
-            <button className="guide-btn">
+            <button className="guide-btn" onClick={scrollToHowItWorks}>
               <div className="slider">
                 <span className="scroll-text">
-                  {" "}
-                  Scroll <ArrowDown />{" "}
-                </span>{" "}
+                  Scroll <ArrowDown />
+                </span>
                 <br />
                 <span className="btn-text">How It Works</span>
               </div>
@@ -234,7 +280,7 @@ export default function LandingPage() {
         <section className="section-1 ">
           <div
             ref={ref}
-            className={`text-container ${isInView ? "is-visible" : ""}`}
+            className={`text-container parallax-text ${isInView ? "is-visible" : ""}`}
           >
             <h1>YOU ARE NOT ALONE.</h1>
             <h2>Find thousands with shared passion and mutual understanding</h2>
@@ -269,8 +315,25 @@ export default function LandingPage() {
           <div className="wall-bottom"></div>
           <div className="wall-left"></div>
           <div className="wall-right"></div>
+
+          <h3 className="tip-1">
+            ↑
+            <br /> hover
+          </h3>
         </section>
-        <section className="section-2"></section>
+
+        <section className="section-2" id="how-it-works">
+          <div className="section-header parallax-text">
+            <h2>MATCH WITHOUT THE NOISE</h2>
+            <p>
+              Skip crowded servers. Find exact collaborators, specialized devs,
+              or people who share your vibe instantly.
+            </p>
+          </div>
+          <VerticalProgress steps={STEPS_DATA} />
+          {/* Embed the animated preview */}
+          <QuickSignUpPreview className="step-1" />
+        </section>
       </main>
       <div className="footer">
         <Footer />

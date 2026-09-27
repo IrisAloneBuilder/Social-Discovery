@@ -180,6 +180,11 @@
    background: #585b70;
  }
 
+ .parallax-text {
+   will-change: transform;
+   transition: transform 0s !important;
+ }
+
  /*=======================================- ANIMATIONS -==================================*/
  @keyframes slideUp {
    0% {
@@ -214,5 +219,33 @@
 
    50% {
      box-shadow: 0 0 30px var(--primary-glow-hover);
+   }
+ }
+
+ @keyframes flipX {
+   from {
+     transform: rotateY(0deg);
+   }
+
+   to {
+     transform: rotateY(360deg);
+   }
+ }
+
+ @keyframes visible-for-a-while {
+   1% {
+     opacity: 1;
+   }
+
+   60% {
+     opacity: 1;
+   }
+
+   70% {
+     opacity: 1;
+   }
+
+   100% {
+     opacity: 0;
    }
  }

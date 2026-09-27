@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 interface NavbarProps {
   user?: { name: string };
 }
@@ -19,7 +21,9 @@ export default function Navbar({ user }: NavbarProps) {
         {user ? (
           <button className="launch-btn">Launch Dashboard</button>
         ) : (
-          <button className="sign-in-btn">Sign In</button>
+          <Link to="/signup" className="sign-up-btn">
+            Sign Up
+          </Link>
         )}
       </div>
     </nav>
