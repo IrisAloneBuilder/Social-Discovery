@@ -2,21 +2,40 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../Style/DashboardStyle.scss";
 
-// Dummy profile data to test the search grid
+// Upgraded mock data with avatars and banners
 const MOCK_PROFILES = [
   {
     id: 1,
     username: "cyber_echo",
+    status: "Looking to collaborate 🚀",
     bio: "Building indie web tools & experimenting with synth vocals. Always open to collaborate.",
     tags: ["Music Production", "React", "Calisthenics"],
-    contacts: { discord: "echo#0001", github: "https://github.com" },
+    contacts: { discord: "echo#0001" },
+    avatar:
+      "https://api.dicebear.com/7.x/avataaars/svg?seed=echo&backgroundColor=b6e3f4",
+    banner: "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)",
   },
   {
     id: 2,
     username: "pixel_dev",
+    status: "Playing Roblox 🎮",
     bio: "Looking for someone to play Roblox or test out UI layouts.",
     tags: ["Roblox", "UI Design", "Gaming"],
     contacts: { discord: "pixel_dev_real" },
+    avatar:
+      "https://api.dicebear.com/7.x/avataaars/svg?seed=pixel&backgroundColor=c0aede",
+    banner: "linear-gradient(135deg, #ec4899 0%, #f43f5e 100%)",
+  },
+  {
+    id: 3,
+    username: "linux_knight",
+    status: "Deep in the terminal 🐧",
+    bio: "Arch Linux user. Customizing Hyprland workflows and writing full-stack apps.",
+    tags: ["React", "UI Design"],
+    contacts: { discord: "knight_00" },
+    avatar:
+      "https://api.dicebear.com/7.x/avataaars/svg?seed=knight&backgroundColor=ffdfbf",
+    banner: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
   },
 ];
 
@@ -39,65 +58,92 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="dashboard-container">
-      {/* Top Header Navigation */}
-      <header className="dash-header">
-        <Link to="/" className="dash-logo">
-          Social Discovery
-        </Link>
-        <div className="user-profile-menu">
-          <span>@alex_22</span>
+    <div className="app-layout">
+      {/* App Sidebar Navigation */}
+      <aside className="app-sidebar">
+        <div className="sidebar-brand">
+          <div className="brand-icon">SD</div>
         </div>
-      </header>
+        <nav className="sidebar-nav">
+          <button className="nav-item active" title="Discovery">
+            🌍
+          </button>
+          <button className="nav-item" title="Messages">
+            💬
+          </button>
+          <button className="nav-item setting" title="Settings">
+            ⚙️
+          </button>
+        </nav>
+        <div className="sidebar-bottom">
+          <img
+            src="https://api.dicebear.com/7.x/avataaars/svg?seed=alex&backgroundColor=ffd5dc"
+            alt="You"
+            className="user-avatar-small"
+          />
+        </div>
+      </aside>
 
-      {/* Filter Section */}
-      <section className="search-section">
-        <h1>Find Your Match</h1>
-        <p>
-          Filter by tags to find people who match your exact vibe or project
-          needs.
-        </p>
+      {/* Main Dashboard Content */}
+      <main className="dashboard-content">
+        {/*} <div className="search-bar">
+          <input type="text" placeholder="Search users by name or keyword..." />
+        </div>
 
-        <div className="tags-cloud">
+        {/* Filter Bar (Now sticky and clean) */}
+        <section className="filter-dock">
           {POPULAR_TAGS.map((tag) => (
             <button
               key={tag}
-              className={`tag-pill ${selectedTags.includes(tag) ? "active" : ""}`}
+              className={`filter-pill ${selectedTags.includes(tag) ? "active" : ""}`}
               onClick={() => toggleTag(tag)}
             >
-              #{tag}
+              {tag}
             </button>
           ))}
-        </div>
-      </section>
+        </section>
 
-      {/* Matches Grid */}
-      <section className="cards-grid">
-        {MOCK_PROFILES.map((profile) => (
-          <div key={profile.id} className="profile-card">
-            <div className="card-top">
-              <h3>@{profile.username}</h3>
-            </div>
-            <p className="bio">{profile.bio}</p>
+        {/* Upgraded Profile Cards */}
+        <section className="user-grid">
+          {MOCK_PROFILES.map((profile) => (
+            <div key={profile.id} className="user-card">
+              <div
+                className="card-banner"
+                style={{ background: profile.banner }}
+              ></div>
 
-            <div className="card-tags">
-              {profile.tags.map((t) => (
-                <span key={t} className="badge">
-                  #{t}
-                </span>
-              ))}
-            </div>
+              <div className="card-body">
+                <img
+                  src={profile.avatar}
+                  alt={profile.username}
+                  className="card-avatar"
+                />
 
-            <div className="card-actions">
-              {profile.contacts.discord && (
-                <button className="contact-btn discord">
-                  Discord: {profile.contacts.discord}
+                <div className="card-info">
+                  <h3>@{profile.username}</h3>
+                  <span className="status-badge">{profile.status}</span>
+                </div>
+
+                <p className="card-bio">{profile.bio}</p>
+
+                <div className="card-tags">
+                  {profile.tags.map((t) => (
+                    <span key={t} className="tag">
+                      #{t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="card-footer">
+                <button className="connect-btn discord">
+                  <span className="icon">🎮</span> Connect
                 </button>
-              )}
+              </div>
             </div>
-          </div>
-        ))}
-      </section>
+          ))}
+        </section>
+      </main>
     </div>
   );
 }

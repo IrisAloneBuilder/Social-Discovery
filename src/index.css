@@ -40,9 +40,7 @@
    --Montserrat: 'Montserrat', Roboto, sans-serif;
    --Press-Start-2P: 'Press Start 2P', Roboto, sans-serif;
    --Doto: 'doto', Roboto, sans-serif;
-
-
-
+   --tech: 'orbitron', inter, sans-serif;
    /* For text-readablity etc. */
    font: 18px/145% var(--sans);
    letter-spacing: 0.18px;
@@ -247,5 +245,167 @@
 
    100% {
      opacity: 0;
+   }
+ }
+
+ /* --- Glitch Animations --- */
+ @keyframes cardSliceGlitch {
+   0% {
+     clip-path: inset(0 0 0 0);
+   }
+
+   15% {
+     clip-path: inset(0 0 0 0);
+   }
+
+   17% {
+     clip-path: inset(0 0 0 0);
+   }
+
+   98% {
+     clip-path: inset(0 0 0 0);
+   }
+
+   99% {
+     clip-path: inset(10% 0 50% 0);
+   }
+
+   100% {
+     clip-path: inset(0 0 0 0);
+   }
+ }
+
+ @keyframes glitchSplitTop {
+   0% {
+     transform: translate(0);
+     clip-path: inset(0 0 0 0);
+     opacity: 0;
+   }
+
+   20% {
+     transform: translate(0);
+     clip-path: inset(0 0 0 0);
+     opacity: 0;
+   }
+
+   98% {
+     transform: translate(3px, 1px);
+     clip-path: inset(30% 0 20% 0);
+     opacity: 0;
+   }
+
+   99% {
+     transform: translate(-2% 50%);
+     clip-path: inset(10% 0 70% 0);
+     opacity: 1;
+   }
+
+   100% {
+     transform: translate(5% -20%);
+     clip-path: inset(5% 0 60% 0);
+     opacity: 1;
+   }
+ }
+
+ @keyframes glitchSplitBottom {
+   0% {
+     transform: translate(0);
+     clip-path: inset(60% 0 0 0);
+     opacity: 0;
+   }
+
+   20% {
+     transform: translate(3px, 2px);
+     clip-path: inset(50% 0 10% 0);
+     opacity: 0;
+   }
+
+   98% {
+     transform: translate(-3px, -1px);
+     clip-path: inset(20% 0 30% 0);
+     opacity: 0;
+   }
+
+   99% {
+     transform: translate(-2% 50%);
+     clip-path: inset(10% 0 7% 0);
+     opacity: 1;
+   }
+
+   100% {
+     transform: translate(5% -20%);
+     clip-path: inset(5% 0 6% 0);
+     opacity: 1;
+   }
+ }
+
+ @keyframes idleGlitch {
+
+   0%,
+   15%,
+   100% {
+     clip-path: inset(0 0 0 0);
+     box-shadow: 0 0 0 3px var(--primary);
+     opacity: 0.2;
+   }
+
+   3% {
+     clip-path: inset(25% 0 45% 0);
+     box-shadow: -4px 0 #ff0055, 4px 0 #00ffe1;
+     opacity: 0.85;
+   }
+
+   6% {
+     clip-path: inset(60% 0 10% 0);
+     box-shadow: 4px 0 #ff0055, -4px 0 #00ffe1;
+     opacity: 0.95;
+   }
+
+   9% {
+     clip-path: inset(10% 0 70% 0);
+     box-shadow: -2px 0 #00ffe1, 2px 0 #ff0055;
+     opacity: 0.7;
+   }
+
+   12% {
+     clip-path: inset(0 0 0 0);
+     box-shadow: 0 0 0 3px var(--primary);
+     opacity: 0.2;
+   }
+ }
+
+ /* Plays only once when .glitch-active is attached by JS */
+ .bg-card.glitch-active {
+   animation: singleGlitchBurst 0.5s ease-in-out;
+ }
+
+ @keyframes fullCardRGBGlitch {
+
+   /* Resting state for 97% of the loop */
+   0%,
+   96%,
+   100% {
+     clip-path: inset(0 0 0 0);
+     filter: drop-shadow(0 0 0 transparent);
+     opacity: 0.2;
+   }
+
+   /* Glitch triggers briefly in the last 3% */
+   97% {
+     clip-path: inset(18% -15px 52% -15px);
+     filter: drop-shadow(-8px 0 2px #00ffe1) drop-shadow(8px 0 2px #ff0055);
+     opacity: 1;
+   }
+
+   98% {
+     clip-path: inset(62% -15px 8% -15px);
+     filter: drop-shadow(8px 0 2px #00ffe1) drop-shadow(-8px 0 2px #ff0055);
+     opacity: 1;
+   }
+
+   99% {
+     clip-path: inset(32% -15px 38% -15px);
+     filter: drop-shadow(-8px 0 2px #00ffe1) drop-shadow(8px 0 2px #ff0055);
+     opacity: 1;
    }
  }

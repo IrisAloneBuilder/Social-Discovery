@@ -293,20 +293,29 @@ export default function LandingPage() {
               <div
                 key={idx}
                 className="bg-card"
-                style={{
-                  top: card.top,
-                  left: card.left,
-                  right: card.right,
-                  transform: `rotateX(${card.rotX}deg) rotateY(${card.rotY}deg) scale(${card.scale})`,
-                }}
+                style={
+                  {
+                    top: card.top,
+                    left: card.left,
+                    right: card.right,
+                    transform: `rotateX(${card.rotX}deg) rotateY(${card.rotY}deg) scale(${card.scale})`,
+                    /* Generates a fixed staggered delay so cards start at different points */
+                    /* Staggered delay up to 12s */
+                    "--card-delay": `-${((idx * 3.1) % 12).toFixed(2)}s`,
+                    /* Rare loop duration between 10s and 20s */
+                    "--card-duration": `${(10 + ((idx * 1.7) % 10)).toFixed(1)}s`,
+                  } as React.CSSProperties
+                }
               >
                 {" "}
                 <div className="card-content">
-                  <h2 className="card-tag">{card.tag}</h2>
+                  <h2 className="card-tag" data-text={card.tag}>
+                    {card.tag}
+                  </h2>
                   <p className="card-sub">{card.user}</p>
                 </div>
               </div>
-            ))}
+            ))}{" "}
           </div>
 
           {/* Background Walls */}

@@ -1,161 +1,261 @@
 // src/Style/DashboardStyle.scss
 
-// Theme Variables
-$bg-dark: #0b0f19;
-$card-bg: rgba(18, 24, 38, 0.7);
-$border-color: rgba(255, 255, 255, 0.08);
-$accent-primary: #6366f1;
-$accent-glow: rgba(99, 102, 241, 0.35);
-$text-main: #f3f4f6;
-$text-muted: #9ca3af;
-$discord-brand: #5865f2;
+$bg-app: #0e1116;
+$bg-sidebar: #161621;
+$card-bg: #161b22;
+$card-hover: #1c2128;
+$accent: #6366f1;
+$text-main: #f0f6fc;
+$text-muted: #8b949e;
+$border-color: rgba(255, 255, 255, 0.06);
 
-.dashboard-container {
-  min-height: 100vh;
-  background-color: $bg-dark;
-  background-image:
-    radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 60%),
-    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 100% 100%, 40px 40px, 40px 40px;
-  color: $text-main;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  padding-bottom: 4rem;
-}
-
-/* Header Navbar */
-.dash-header {
+.app-layout {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.25rem 2rem;
-  border-bottom: 1px solid $border-color;
-  backdrop-filter: blur(12px);
-  background: rgba(11, 15, 25, 0.8);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-
-  .dash-logo {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: $text-main;
-    text-decoration: none;
-    letter-spacing: -0.02em;
-    transition: color 0.2s ease;
-
-    &:hover {
-      color: $accent-primary;
-    }
-  }
-
-  .user-profile-menu {
-    span {
-      font-weight: 600;
-      color: $text-muted;
-      font-size: 0.875rem;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 0.4rem 0.85rem;
-      border-radius: 20px;
-      border: 1px solid $border-color;
-    }
-  }
+  flex-direction: column;
+  height: 100vh;
+  background-color: #1010;
+  color: $text-main;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  overflow: hidden;
+  //text-align: left;
+  /* FIX: Overrides Vite's default center alignment */
+  // overflow-x: hidden;
 }
 
-/* Filter & Tag Search Section */
-.search-section {
-  max-width: 900px;
-  margin: 3.5rem auto 2.5rem;
-  padding: 0 1.5rem;
-  text-align: center;
 
-  h1 {
-    font-size: 2.25rem;
-    font-weight: 800;
-    margin-bottom: 0.5rem;
-    background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+
+
+/* Sidebar Styling */
+.app-sidebar {
+  position: relative;
+  top: 0;
+  height: 72px;
+  width: 100%;
+  background-color: transparent;
+  border-right: 1px solid $border-color;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 1rem 0;
+  border-radius: 1rem;
+  //z-index: 50;
+
+
+  .sidebar-brand {
+    //margin-bottom: 2rem;
+
+    .brand-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, $accent, #a855f7);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+      margin: 0 1rem;
+    }
   }
 
-  p {
-    color: $text-muted;
-    font-size: 1rem;
-    margin-bottom: 1.75rem;
-  }
-
-  .tags-cloud {
+  .sidebar-nav {
+    position: relative;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.6rem;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    gap: 1rem;
 
-    .tag-pill {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid $border-color;
-      color: $text-muted;
-      padding: 0.5rem 1rem;
-      border-radius: 9999px;
-      font-size: 0.875rem;
-      font-weight: 500;
+
+    button.setting {
+      position: absolute;
+      right: 1rem;
+
+
+    }
+
+    .nav-item {
+      width: 48px;
+      height: 48px;
+      border-radius: 24px;
+      background: #1c2128;
+      border: none;
+      font-size: 1.2rem;
       cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.2s ease;
 
       &:hover {
-        border-color: rgba(99, 102, 241, 0.5);
-        color: $text-main;
-        transform: translateY(-1px);
+        border-radius: 12px;
+        background: $accent;
       }
 
       &.active {
-        background: $accent-primary;
-        color: #ffffff;
-        border-color: $accent-primary;
-        box-shadow: 0 0 15px $accent-glow;
+        border-radius: 12px;
+        background: $accent;
+        box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+      }
+
+    }
+  }
+
+  .sidebar-bottom {
+    .user-avatar-small {
+      position: relative;
+      top: 3px;
+      margin: 0 1rem;
+      width: 41px;
+      height: 41px;
+      border-radius: 50%;
+      border: 2px solid $border-color;
+      cursor: pointer;
+    }
+  }
+}
+
+/* Main Dashboard Area */
+.dashboard-content {
+  display: flex;
+  flex-direction: column;
+  overflow-x: auto;
+  padding: 2rem 3rem;
+  background-color: $bg-app;
+  background-image: radial-gradient(circle at top right, rgba(99, 102, 241, 0.05), transparent 40%);
+  border-radius: 2rem;
+
+}
+
+/* FIX: Bulletproof Header Layout */
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  /* Prevents squishing on small screens */
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+
+  .search-bar {
+    ;
+
+    input {
+      background: #1c2128;
+      border: 1px solid $border-color;
+      color: $text-main;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      width: 280px;
+      outline: none;
+      transition: border-color 0.2s;
+
+      &:focus {
+        border-color: $accent;
       }
     }
   }
 }
 
-/* Cards Grid */
-.cards-grid {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
 
-  .profile-card {
-    background: $card-bg;
+/* Filter Dock */
+.filter-dock {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  /* FIX: Aligns tags to the left cleanly */
+
+  .filter-pill {
+    background: rgba(255, 255, 255, 0.03);
     border: 1px solid $border-color;
-    border-radius: 16px;
-    padding: 1.5rem;
-    backdrop-filter: blur(8px);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    color: $text-muted;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
 
     &:hover {
-      transform: translateY(-4px);
-      border-color: rgba(99, 102, 241, 0.4);
-      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+      background: rgba(255, 255, 255, 0.08);
+      color: $text-main;
     }
 
-    .card-top {
-      margin-bottom: 0.75rem;
+    &.active {
+      background: $accent;
+      color: white;
+      border-color: $accent;
+    }
+  }
+}
+
+/* User Grid & Cards */
+.user-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.user-card {
+  background: $card-bg;
+  border: 1px solid $border-color;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .card-banner {
+    height: 80px;
+    width: 100%;
+  }
+
+  .card-body {
+    padding: 0 1.5rem 1.5rem;
+    position: relative;
+    flex: 1;
+    text-align: left;
+    /* FIX: Forces all card text to align left */
+
+    .card-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 4px solid $card-bg;
+      margin-top: -36px;
+      background: #fff;
+      display: block;
+      /* Prevents center-floating */
+    }
+
+    .card-info {
+      margin-top: 0.75rem;
+      margin-bottom: 1rem;
 
       h3 {
-        font-size: 1.15rem;
-        font-weight: 700;
-        color: $text-main;
+        margin: 0 0 0.4rem 0;
+        font-size: 1.25rem;
+      }
+
+      .status-badge {
+        font-size: 0.75rem;
+        color: #10b981;
+        background: rgba(16, 185, 129, 0.1);
+        padding: 0.25rem 0.6rem;
+        border-radius: 6px;
+        display: inline-block;
+        font-weight: 600;
       }
     }
 
-    .bio {
-      font-size: 0.9rem;
+    .card-bio {
       color: $text-muted;
+      font-size: 0.9rem;
       line-height: 1.5;
       margin-bottom: 1.25rem;
     }
@@ -164,40 +264,44 @@ $discord-brand: #5865f2;
       display: flex;
       flex-wrap: wrap;
       gap: 0.4rem;
-      margin-bottom: 1.5rem;
+      justify-content: flex-start;
+      /* FIX: Tags line up on the left */
 
-      .badge {
-        font-size: 0.75rem;
+      .tag {
+        background: #1c2128;
+        border: 1px solid rgba(255, 255, 255, 0.05);
         color: #a5b4fc;
-        background: rgba(99, 102, 241, 0.1);
-        border: 1px solid rgba(99, 102, 241, 0.2);
-        padding: 0.2rem 0.6rem;
+        font-size: 0.75rem;
+        padding: 0.3rem 0.6rem;
         border-radius: 6px;
       }
     }
+  }
 
-    .card-actions {
-      .contact-btn {
-        width: 100%;
-        padding: 0.6rem 1rem;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: 0.85rem;
-        cursor: pointer;
-        border: none;
-        transition: opacity 0.2s ease, transform 0.1s ease;
+  .card-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid $border-color;
+    background: rgba(0, 0, 0, 0.2);
 
-        &.discord {
-          background-color: $discord-brand;
-          color: #ffffff;
+    .connect-btn {
+      width: 100%;
+      padding: 0.6rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: background 0.2s;
 
-          &:hover {
-            opacity: 0.9;
-          }
+      &.discord {
+        background: #5865F2;
+        color: white;
 
-          &:active {
-            transform: scale(0.98);
-          }
+        &:hover {
+          background: #4752C4;
         }
       }
     }
