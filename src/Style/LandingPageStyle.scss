@@ -149,15 +149,14 @@ main {
   // 1. Text Content Layer (Floating over 3D Canvas)
   div.hero-section {
     position: absolute;
-    top: 8rem;
+    top: 15rem;
     z-index: 2;
     max-width: 655px;
-    min-height: 100vh; // Takes full viewport before scrolling to section-1 
-    min-height: 100dvh;
+    min-height: 20rem;
     display: flex;
     flex-direction: column;
     pointer-events: none; // Lets mouse controls pass through to the 3D model
-    animation: slideUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    //    animation: slideUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 
 
     h1 {
@@ -182,6 +181,7 @@ main {
         font-weight: 600;
         cursor: pointer;
         transition: all 0.2s ease;
+        user-select: none;
 
         &.dashboard-btn {
           background-color: var(--primary);
@@ -295,7 +295,7 @@ main {
 
         background: rgba(0, 229, 255, 0.11);
         opacity: 0.2;
-        //box-shadow: 0 0 0 3px var(--primary);
+        //  box-shadow: 0 0 0 10px var(--primary);
         border: 2.7px solid var(--primary);
 
         backface-visibility: hidden;
@@ -315,7 +315,7 @@ main {
 
 
         /* steps(1) stops CSS from smoothly interpolating between keyframes */
-        animation: fullCardRGBGlitch var(--card-duration, 20s) steps(2) infinite var(--card-delay, 0s);
+        animation: fullCardRGBGlitch var(--card-duration, 2s) steps(2) infinite var(--card-delay, 0s);
 
 
         h2 {
@@ -345,16 +345,18 @@ main {
         &:hover {
           transform: translateZ(40px) scale(1.05) rotateX(0deg) rotateY(0deg) !important;
           border-color: var(--primary);
-          opacity: 1;
-          box-shadow: 0 0 35px -10px var(--primary-glow-hover);
-          //  outline: 3px solid var(--primary);
+          //  box-shadow: 0 0 35px -10px var(--primary-glow-hover);
+          box-shadow: none;
+          //outline: 3px solid var(--primary);
           z-index: 5;
-          backdrop-filter: blur(0.9px);
+          // backdrop-filter: blur(0.9px);
           background-color: rgba(0, 229, 255, 0.19);
-          /* drop-shadow: -8px 0 0 #00ffe1, 15px 0 0 #ff0055; */
-          opacity: 1 !important;
-          animation: none;
 
+          opacity: 0.9 !important;
+
+
+
+          animation: fullCardRGBGlitchHover 4s steps(2, end) infinite;
 
           p,
           h2 {

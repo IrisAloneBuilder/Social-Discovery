@@ -1,142 +1,128 @@
-import React, { useRef, useMemo } from 'react'
-import { useFrame } from '@react-three/fiber'
-import { Edges } from '@react-three/drei'
-import * as THREE from 'three'
+import React, { useRef, useMemo } from "react";
+import { useFrame } from "@react-three/fiber";
+import { Edges } from "@react-three/drei";
+import * as THREE from "three";
 
-// Corner node positions forming the hypercube frame
-const CUBE_POSITIONS = [
-  [-1.5, -1.5, -1.5],
-  [-1.5, -1.5,  1.5],
-  [-1.5,  1.5, -1.5],
-  [-1.5,  1.5,  1.5],
-  [ 1.5, -1.5, -1.5],
-  [ 1.5, -1.5,  1.5],
-  [ 1.5,  1.5, -1.5],
-  [ 1.5,  1.5,  1.5],
-]
-
-// Frame edge connections between outer nodes
-const FRAME_EDGES = [
-  [0, 1], [0, 2], [0, 4], [1, 3], [1, 5], 
-  [2, 3], [2, 6], [3, 7], [4, 5], [4, 6], 
-  [5, 7], [6, 7]
-]
-
-export function Model(props) {
-  const groupRef = useRef()
-  const particlesRef = useRef()
-
-  // Slow floating animation
-  useFrame((state, delta) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y += delta * 0.2
-      groupRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.5) * 0.08
-    }
-    if (particlesRef.current) {
-      particlesRef.current.rotation.y -= delta * 0.05
-    }
-  })
-
-  // Floating background ambient particles
-  const particlePositions = useMemo(() => {
-    const pos = new Float32Array(80 * 3)
-    for (let i = 0; i < 80; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * 10
-      pos[i * 3 + 1] = (Math.random() - 0.5) * 10
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 10
-    }
-    return pos
-  }, [])
-
-  // Beam lines connecting outer cubes to center and along frame edges
-  const lineGeometry = useMemo(() => {
-    const points = []
-    
-    // 1. Outer box frame lines
-    FRAME_EDGES.forEach(([sIdx, eIdx]) => {
-      points.push(new THREE.Vector3(...CUBE_POSITIONS[sIdx]))
-      points.push(new THREE.Vector3(...CUBE_POSITIONS[eIdx]))
-    })
-    
-    // 2. Pyramidal center beam lines (connecting each outer corner to origin)
-    CUBE_POSITIONS.forEach((pos) => {
-      points.push(new THREE.Vector3(...pos))
-      points.push(new THREE.Vector3(0, 0, 0))
-    })
-
-    return new THREE.BufferGeometry().setFromPoints(points)
-  }, [])
-
+function PlexusMesh({ geometry, position, scale, rotation }) {
   return (
-    <group {...props} ref={groupRef}>
-      {/* Central Node Cube */}
-      <group position={[0, 0, 0]}>
-        <mesh scale={0.8}>
-          <boxGeometry args={[1, 1, 1]} />
-          <meshPhysicalMaterial
-            color="#00d8ff"
-            transmission={0.85}
-            transparent
-            opacity={0.8}
-            roughness={0.05}
-            ior={1.5}
-            thickness={0.5}
-          />
-          <Edges color="#a6f6ff" linewidth={2} />
-        </mesh>
-        <mesh scale={0.45}>
-          <boxGeometry args={[1, 1, 1]} />
-          <meshBasicMaterial color="#ffffff" />
-        </mesh>
-      </group>
-
-      {/* 8 Translucent Outer Corner Cubes with Glowing Cores */}
-      {CUBE_POSITIONS.map((pos, i) => (
-        <group key={i} position={pos}>
-          {/* Glass Outer Shell */}
-          <mesh scale={0.7}>
-            <boxGeometry args={[1, 1, 1]} />
-            <meshPhysicalMaterial
-              color="#0088ff"
-              transmission={0.88}
-              transparent
-              opacity={0.75}
-              roughness={0.1}
-              ior={1.4}
-              thickness={0.4}
-            />
-            <Edges color="#7ee7ff" linewidth={1.5} />
-          </mesh>
-
-          {/* Inner Glowing Core */}
-          <mesh scale={0.32}>
-            <boxGeometry args={[1, 1, 1]} />
-            <meshBasicMaterial color="#e0ffff" />
-          </mesh>
-        </group>
-      ))}
-
-      {/* Glowing Connecting Light Beams */}
-      <lineSegments geometry={lineGeometry}>
-        <lineBasicMaterial color="#00e5ff" transparent opacity={0.5} />
-      </lineSegments>
-
-      {/* Floating Cyan Particles */}
-      <points ref={particlesRef}>
-        <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            args={[particlePositions, 3]}
-          />
-        </bufferGeometry>
+    <group position={position} scale={scale} rotation={rotation}>
+      {/* Wireframe lines */}
+      <mesh geometry={geometry}>
+        <meshBasicMaterial
+          color="#0066ff"
+          wireframe
+          transparent
+          opacity={0.35}
+          blending={THREE.AdditiveBlending}
+          depthWrite={false}
+        />
+      </mesh>
+      {/* Vertex nodes */}
+      <points geometry={geometry}>
         <pointsMaterial
-          size={0.07}
+          size={0.05}
           color="#00ffff"
           transparent
-          opacity={0.8}
+          opacity={0.9}
           blending={THREE.AdditiveBlending}
+          depthWrite={false}
         />
       </points>
     </group>
-  )
+  );
+}
+
+export function Model(props) {
+  const hologramRef = useRef();
+  const particlesRef = useRef();
+
+  const headGeo = useMemo(() => new THREE.IcosahedronGeometry(0.9, 2), []);
+  const visorGeo = useMemo(() => new THREE.BoxGeometry(1.2, 0.5, 0.8, 4, 2, 2), []);
+  const neckGeo = useMemo(() => new THREE.CylinderGeometry(0.4, 0.6, 0.8, 12, 3, true), []);
+  const shouldersGeo = useMemo(() => new THREE.SphereGeometry(1.4, 16, 12, 0, Math.PI * 2, 0, Math.PI / 2.5), []);
+
+  const particleCount = 180;
+  const particlePositions = useMemo(() => {
+    const pos = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount; i++) {
+      pos[i * 3] = (Math.random() - 0.5) * 3;
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 3 + 0.5;
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 2;
+    }
+    return pos;
+  }, []);
+
+  useFrame((state, delta) => {
+    if (hologramRef.current) {
+      hologramRef.current.position.y = Math.sin(state.clock.elapsedTime * 1.5) * 0.08;
+      hologramRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2 - 0.3;
+    }
+
+    if (particlesRef.current) {
+      const positions = particlesRef.current.geometry.attributes.position.array;
+      for (let i = 0; i < particleCount; i++) {
+        positions[i * 3] += delta * (0.8 + Math.random() * 0.4);
+        positions[i * 3 + 1] += delta * 0.15;
+
+        if (positions[i * 3] > 2.5) {
+          positions[i * 3] = Math.random() * 1.2 - 1.5;
+          positions[i * 3 + 1] = Math.random() * 2.5 - 1;
+        }
+      }
+      particlesRef.current.geometry.attributes.position.needsUpdate = true;
+    }
+  });
+
+  return (
+    <group {...props}>
+      {/* Sci-Fi Projector Base */}
+      <group position={[0, -2.0, 0]}>
+        <mesh position={[0, 0, 0]}>
+          <cylinderGeometry args={[0.3, 0.4, 0.1, 32]} />
+          <meshStandardMaterial color="#050a12" metalness={0.9} roughness={0.2} />
+          <Edges color="#00ffff" linewidth={1} transparent opacity={0.4} />
+        </mesh>
+
+        <mesh position={[0, 0.06, 0]}>
+          <cylinderGeometry args={[0.2, 0.2, 0.02, 32]} />
+          <meshBasicMaterial color="#ffffff" />
+        </mesh>
+
+        {/* Upward Projection Cone */}
+        <mesh position={[0, 1.4, 0]}>
+          <cylinderGeometry args={[1.8, 0.2, 2.8, 32, 1, true]} />
+          <meshBasicMaterial
+            color="#00ffff"
+            transparent
+            opacity={0.08}
+            side={THREE.DoubleSide}
+            blending={THREE.AdditiveBlending}
+            depthWrite={false}
+          />
+        </mesh>
+      </group>
+
+      {/* Hologram Mesh */}
+      <group ref={hologramRef} position={[0, 0.1, 0]}>
+        <PlexusMesh geometry={headGeo} position={[0, 0.8, 0]} />
+        <PlexusMesh geometry={visorGeo} position={[0, 0.8, 0.7]} />
+        <PlexusMesh geometry={neckGeo} position={[0, -0.2, 0]} />
+        <PlexusMesh geometry={shouldersGeo} position={[0, -0.6, 0]} />
+
+        <points ref={particlesRef}>
+          <bufferGeometry>
+            <bufferAttribute attach="attributes-position" args={[particlePositions, 3]} />
+          </bufferGeometry>
+          <pointsMaterial
+            size={0.04}
+            color="#00ffff"
+            transparent
+            opacity={0.8}
+            blending={THREE.AdditiveBlending}
+            depthWrite={false}
+          />
+        </points>
+      </group>
+    </group>
+  );
 }

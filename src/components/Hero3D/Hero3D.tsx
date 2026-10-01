@@ -1,26 +1,41 @@
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Environment } from '@react-three/drei';
-import { Model } from './cube_and_balls';
+import React, { Suspense } from "react";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+// @ts-expect-error - JSX component without TS declarations
+import { Model as EarthModel } from "./EarthModel";
 
 export default function Hero3D() {
   return (
-    <div style={{ width: '100%', height: '100%', background: 'radial-gradient(circle at 75% 50%, #0f2b48 0%, #030914 70%)' }}>
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        minHeight: "500px",
+        position: "relative",
+      }}
+    >
       <Canvas
-        camera={{ position: [0, 0, 7], fov: 45 }}
+        camera={{ position: [0, 0, 5], fov: 45 }}
         gl={{ alpha: true, antialias: true }}
       >
-        <ambientLight intensity={0.4} />
-        {/* Adjusted point light position back to the right */}
-        <pointLight position={[3, 0, 0]} intensity={12} color="#00ffff" distance={6} />
-        <directionalLight position={[5, 8, 5]} color="#00e5ff" intensity={3} />
-        <directionalLight position={[-5, -5, -2]} color="#0044ff" intensity={2} />
+        <directionalLight position={[5, 5, 5]} intensity={2.0} />
+        <pointLight
+          position={[3, 2, 3]}
+          intensity={5}
+          color="#00ffff"
+          distance={10}
+        />
 
-        {/* Model shifted RIGHT with positive X coordinate */}
-        <Model scale={0.85} position={[2.5, 0, 0]} />
+        <Suspense fallback={null}>
+          <EarthModel position={[2.5, 0, 0]} scale={1.5} />
+        </Suspense>
 
-        <Environment preset="city" />
-        {/* Center the camera rotation pivot on the new right-side position */}
-        <OrbitControls target={[0, 0, 0]} enableZoom={false} autoRotate={false} />
+        <OrbitControls
+          enableZoom={false}
+          autoRotate
+          autoRotateSpeed={1.0}
+          makeDefault
+        />
       </Canvas>
     </div>
   );

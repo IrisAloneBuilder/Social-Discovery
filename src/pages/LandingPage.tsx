@@ -301,9 +301,9 @@ export default function LandingPage() {
                     transform: `rotateX(${card.rotX}deg) rotateY(${card.rotY}deg) scale(${card.scale})`,
                     /* Generates a fixed staggered delay so cards start at different points */
                     /* Staggered delay up to 12s */
-                    "--card-delay": `-${((idx * 3.1) % 12).toFixed(2)}s`,
-                    /* Rare loop duration between 10s and 20s */
-                    "--card-duration": `${(10 + ((idx * 1.7) % 10)).toFixed(1)}s`,
+                    "--card-delay": `-${((idx * 5.1) % 35).toFixed(2)}s`,
+                    /* Rare loop duration between 45s and 90s */
+                    "--card-duration": `${(10 + ((idx * 1.3) % 10)).toFixed(1)}s`,
                   } as React.CSSProperties
                 }
               >

@@ -379,7 +379,34 @@
    animation: singleGlitchBurst 0.5s ease-in-out;
  }
 
+ /* File: index.css */
+
  @keyframes fullCardRGBGlitch {
+
+   /* Rest for 99.6% of the timeline (e.g. ~29.8s out of 30s) */
+   0%,
+   99.3%,
+   100% {
+     clip-path: inset(0 0 0 0);
+     filter: none;
+     opacity: 0.2;
+   }
+
+   /* Rapid 0.12s burst in the final 0.4% */
+   99.6% {
+     clip-path: inset(18% -15px 52% -15px);
+     filter: drop-shadow(-8px 9px #00ffe1) drop-shadow(8px 2px #ff0055);
+     opacity: 1;
+   }
+
+   99.85% {
+     clip-path: inset(62% -15px 8% -15px);
+     filter: drop-shadow(-8px 15px red) drop-shadow(8px -2px #00ffe1);
+     opacity: 1;
+   }
+ }
+
+ @keyframes fullCardRGBGlitchHover {
 
    /* Resting state for 97% of the loop */
    0%,
@@ -392,19 +419,19 @@
 
    /* Glitch triggers briefly in the last 3% */
    97% {
-     clip-path: inset(18% -15px 52% -15px);
+     /* clip-path: inset(18% -15px 52% -15px); */
      filter: drop-shadow(-8px 0 2px #00ffe1) drop-shadow(8px 0 2px #ff0055);
      opacity: 1;
    }
 
    98% {
-     clip-path: inset(62% -15px 8% -15px);
-     filter: drop-shadow(8px 0 2px #00ffe1) drop-shadow(-8px 0 2px #ff0055);
+     /* clip-path: inset(62% -15px 8% -15px); */
+     filter: drop-shadow(8px 0 10px #00ffe1) drop-shadow(-8px -9px #ff0055);
      opacity: 1;
    }
 
    99% {
-     clip-path: inset(32% -15px 38% -15px);
+     /* clip-path: inset(5% -15px 2% -15px); */
      filter: drop-shadow(-8px 0 2px #00ffe1) drop-shadow(8px 0 2px #ff0055);
      opacity: 1;
    }
