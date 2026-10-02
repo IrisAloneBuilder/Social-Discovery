@@ -1,6 +1,5 @@
 import React, { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
 // @ts-expect-error - JSX component without TS declarations
 import { Model as EarthModel } from "./EarthModel";
 
@@ -12,30 +11,30 @@ export default function Hero3D() {
         height: "100%",
         minHeight: "500px",
         position: "relative",
+        pointerEvents: "none",
       }}
     >
       <Canvas
-        camera={{ position: [0, 0, 5], fov: 45 }}
-        gl={{ alpha: true, antialias: true }}
+        camera={{ position: [0, 0.05, 5.35], fov: 44 }}
+        dpr={[1, 1.5]}
+        gl={{
+          alpha: true,
+          antialias: true,
+          powerPreference: "high-performance",
+        }}
+        onCreated={({ gl }) => {
+          gl.setClearColor(0x000000, 0);
+          gl.toneMapping = 0;
+        }}
       >
-        <directionalLight position={[5, 5, 5]} intensity={2.0} />
-        <pointLight
-          position={[3, 2, 3]}
-          intensity={5}
-          color="#00ffff"
-          distance={10}
-        />
-
         <Suspense fallback={null}>
-          <EarthModel position={[2.5, 0, 0]} scale={1.5} />
+          {/*
+            Important layout fix:
+            The previous version used [2.5, 0, 0] + scale 1.5, which pushed an
+            already-large model too far toward the edge of the hero.
+          */}
+          <EarthModel position={[1.48, 0.08, 0]} scale={1.02} />
         </Suspense>
-
-        <OrbitControls
-          enableZoom={false}
-          autoRotate
-          autoRotateSpeed={1.0}
-          makeDefault
-        />
       </Canvas>
     </div>
   );

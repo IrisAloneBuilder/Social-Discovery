@@ -250,7 +250,7 @@ export default function LandingPage() {
       </header>
 
       <main>
-        <div className={`hero-section parallax-text`}>
+        <div className={`hero-section `}>
           <h1>
             FIND YOUR NICHE.{" "}
             <span className="Multi-color-text">CONNECT INSTANTLY.</span>

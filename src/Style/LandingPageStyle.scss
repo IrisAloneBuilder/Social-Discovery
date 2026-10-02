@@ -145,18 +145,19 @@ main {
   align-items: start;
   box-sizing: border-box;
   padding: 0 2rem;
+  z-index: 1;
 
   // 1. Text Content Layer (Floating over 3D Canvas)
   div.hero-section {
     position: absolute;
-    top: 15rem;
+    top: 10rem;
     z-index: 2;
     max-width: 655px;
     min-height: 20rem;
     display: flex;
     flex-direction: column;
-    pointer-events: none; // Lets mouse controls pass through to the 3D model
-    //    animation: slideUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    pointer-events: none;
+    margin: none;
 
 
     h1 {
@@ -556,7 +557,7 @@ main {
     margin: 0 auto;
     width: 100vw;
     height: 100dvh;
-    z-index: 1;
+    z-index: -1;
     padding-bottom: 3rem;
 
     //fade effect
