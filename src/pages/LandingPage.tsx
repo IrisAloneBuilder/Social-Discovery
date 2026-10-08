@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import ArrowDown from "../components/Icons/ArrowDown";
 import VerticalProgress from "../components/VerticalProgress";
 import QuickSignUpPreview from "../components/QuickSignUpPreview.tsx";
+import SpotLight from "../components/landingPageComp/spotLight.tsx";
 
 import "../Style/LandingPageStyle.scss";
 
@@ -273,6 +274,8 @@ export default function LandingPage() {
           </div>
         </div>
 
+        <SpotLight />
+
         <div className="canva">
           <Hero3D />
         </div>
@@ -301,7 +304,7 @@ export default function LandingPage() {
                     transform: `rotateX(${card.rotX}deg) rotateY(${card.rotY}deg) scale(${card.scale})`,
                     /* Generates a fixed staggered delay so cards start at different points */
                     /* Staggered delay up to 12s */
-                    "--card-delay": `-${((idx * 5.1) % 35).toFixed(2)}s`,
+                    "--card-delay": `-${((idx * 5.1) % 45).toFixed(2)}s`,
                     /* Rare loop duration between 45s and 90s */
                     "--card-duration": `${(10 + ((idx * 1.3) % 10)).toFixed(1)}s`,
                   } as React.CSSProperties

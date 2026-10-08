@@ -33,7 +33,11 @@ export default function Hero3D() {
             The previous version used [2.5, 0, 0] + scale 1.5, which pushed an
             already-large model too far toward the edge of the hero.
           */}
-          <EarthModel position={[1.48, 0.08, 0]} scale={1.02} />
+          <EarthModel
+            position={[1.95, -0.38, 0]}
+            scale={1.15}
+            earthScale={1.11}
+          />
         </Suspense>
       </Canvas>
     </div>

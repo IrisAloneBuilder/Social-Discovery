@@ -1,5 +1,6 @@
 body {
   background-color: var(--bg-dark);
+
   color: var(--text-muted);
   margin: 0;
   overflow-x: hidden;
@@ -146,6 +147,17 @@ main {
   box-sizing: border-box;
   padding: 0 2rem;
   z-index: 1;
+
+  .spot-light {
+    display: none;
+    position: absolute;
+    margin: 10rem 0 0 40rem;
+
+    width: 10rem;
+    height: 10rem;
+    z-index: 2;
+    transform: rotate(50deg);
+  }
 
   // 1. Text Content Layer (Floating over 3D Canvas)
   div.hero-section {
@@ -370,17 +382,18 @@ main {
     div.text-container {
       display: flex;
       flex-direction: column;
+      justify-content: center;
       position: absolute;
       //spacialized for preventing hover on unsupported cards
-      top: 12.5rem;
+      top: 30%;
       width: 50%;
-      height: 50%;
-      padding-top: 2rem;
+      height: 5%;
+      // background-color: red;
+      padding: 13rem 0;
       z-index: 3;
       color: var(--text-main);
       //scroll animation
       opacity: 0;
-      transform: translateY(40px);
       transition: opacity 5s cubic-bezier(0.16, 1, 0.3, 1),
         transform 5s cubic-bezier(0.16, 1, 0.3, 1);
 
