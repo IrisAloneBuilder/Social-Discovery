@@ -250,6 +250,9 @@ export default function LandingPage() {
         <Navbar />
       </header>
 
+      <div className="mobile-notice">
+        Sorryy not ready for smaller screens yet
+      </div>
       <main>
         <div className={`hero-section `}>
           <h1>

@@ -592,3 +592,38 @@ main {
 
 
 }
+
+
+.mobile-notice {
+  display: none;
+}
+
+@media (max-width: 1140px) {
+
+  /* 2. Completely hide the layout blocks */
+  header,
+  main,
+  footer {
+    display: none !important;
+  }
+
+  /* 3. Force the body to act as a clean flex box wrapper */
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0b0f19;
+    /* Use your background color */
+
+    .mobile-notice {
+      display: flex;
+      color: white;
+      font-size: 1.25rem;
+      text-align: center;
+    }
+  }
+
+  /* 4. Display the single notice element */
+}
