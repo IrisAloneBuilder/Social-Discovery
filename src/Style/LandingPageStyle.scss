@@ -72,8 +72,9 @@ header {
         background-color: var(--primary);
         opacity: 1;
         box-shadow: 0 0 30px var(--primary-glow-hover),
-          0 0 20px var(--primary-glow),
-          0 0 20px var(--primary-glow);
+          0 0 30px var(--primary-glow),
+          0 0 20px var(--primary),
+          0 0 40px var(--primary);
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         opacity: 0;
 
@@ -148,15 +149,18 @@ main {
   padding: 0 2rem;
   z-index: 1;
 
-  .spot-light {
-    display: none;
+  .light-effect {
+    display: block;
     position: absolute;
-    margin: 10rem 0 0 40rem;
+    background-color: var(--primary);
+    filter: blur(100px);
+    inset: 5rem 0 0 46rem;
 
     width: 10rem;
     height: 10rem;
-    z-index: 2;
-    transform: rotate(50deg);
+    z-index: -2;
+    box-shadow: 0 0 20px var(--primary-glow),
+      0 0 30px var(--primary);
   }
 
   // 1. Text Content Layer (Floating over 3D Canvas)
@@ -244,7 +248,8 @@ main {
           }
 
           &:hover {
-            background: var(--primary-glow-subtle);
+            background: color-mix(in srgb, var(--primary) 5%, transparent);
+            ;
             border-color: var(--primary);
 
             div.slider {
@@ -304,32 +309,26 @@ main {
         border-radius: 14px;
         z-index: 1;
         will-change: transform, filter, clip-path;
-
-
-        background: rgba(0, 229, 255, 0.11);
         opacity: 0.2;
-        //  box-shadow: 0 0 0 10px var(--primary);
         border: 2.7px solid var(--primary);
+        //  box-shadow: 0 0 0 10px var(--primary);
+        background: rgba(0, 229, 255, 0.11);
 
         backface-visibility: hidden;
         -webkit-backface-visibility: hidden;
+
         outline: 1px solid transparent;
 
         transition: transform 0.90s cubic-bezier(0.16, 1, 0.3, 1),
           border-color 0.35s ease,
           box-shadow 0.35s ease;
-
+        d
         /* Run the staggered idle glitch continuously */
         /* animation: idleGlitch 6s ease-in-out infinite; */
-
         /* animation: cardSliceGlitch 2.6s steps(2, end) infinite; */
-
         /* Continuous idle RGB glitch on the ENTIRE card */
-
-
         /* steps(1) stops CSS from smoothly interpolating between keyframes */
-        animation: fullCardRGBGlitch var(--card-duration, 2s) steps(2) infinite var(--card-delay, 0s);
-
+        /* animation: fullCardRGBGlitch var(--card-duration, 2s) steps(2) infinite var(--card-delay, 0s); */
 
         h2 {
           position: relative;
@@ -338,7 +337,6 @@ main {
           font-weight: 600;
           line-height: 1;
           font-family: var(--tech);
-
         }
 
         p {
@@ -347,14 +345,15 @@ main {
           font-family: var(--Montserrat);
           font-weight: 300;
           line-height: 1;
+          color: var(--text-main);
         }
 
         p,
         h2 {
-          opacity: 0.5;
+          opacity: 0.8;
         }
 
-        /* Hover effect properly nested inside .bg-card */
+
         &:hover {
           transform: translateZ(40px) scale(1.05) rotateX(0deg) rotateY(0deg) !important;
           border-color: var(--primary);
@@ -362,17 +361,14 @@ main {
           box-shadow: none;
           //outline: 3px solid var(--primary);
           z-index: 5;
-          // backdrop-filter: blur(0.9px);
+          backdrop-filter: blur(0.7px);
           background-color: rgba(0, 229, 255, 0.19);
 
           opacity: 0.9 !important;
 
-
-
           animation: fullCardRGBGlitchHover 4s steps(2, end) infinite;
 
-          p,
-          h2 {
+          p h2 {
             opacity: 0.9;
           }
         }
@@ -385,7 +381,7 @@ main {
       justify-content: center;
       position: absolute;
       //spacialized for preventing hover on unsupported cards
-      top: 30%;
+      top: 25%;
       width: 50%;
       height: 5%;
       // background-color: red;
@@ -400,11 +396,6 @@ main {
       &.is-visible {
         opacity: 1;
         transform: translateY(0);
-      }
-
-
-      h2 {
-        color: var(--text-dim);
       }
     }
 
@@ -520,18 +511,33 @@ main {
     box-sizing: border-box;
     padding: 6rem 0 10rem 0; // Reasonable top/bottom padding
     margin-top: 10rem;
+    overflow: hidden;
+    cursor: crosshair;
 
     display: flex;
     flex-direction: column;
     align-items: center;
 
     /* Base dark background & grid */
-    background-color: #070a12;
+    background-color: transparent;
     background-image:
-      radial-gradient(circle at 90% 30%, rgba(0, 210, 255, 0.27) 0%, transparent 15%),
       linear-gradient(to right, rgba(0, 180, 216, 0.12) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(0, 180, 216, 0.12) 1px, transparent 1px);
-    background-size: 100% 100%, 40px 40px, 40px 40px;
+    background-size: 40px 40px, 40px 40px;
+
+    .cursor-glow {
+      position: absolute;
+      pointer-events: none;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+      mix-blend-mode: screen;
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+    }
 
     .section-header {
       text-align: center;
@@ -598,32 +604,32 @@ main {
   display: none;
 }
 
-@media (max-width: 1140px) {
+/* @media (max-width: 1140px) { */
 
-  /* 2. Completely hide the layout blocks */
-  header,
-  main,
-  footer {
-    display: none !important;
-  }
+/* 2. Completely hide the layout blocks */
+/* header, */
+/* main, */
+/* footer { */
+/* display: none !important; */
+/* } */
 
-  /* 3. Force the body to act as a clean flex box wrapper */
-  body {
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #0b0f19;
-    /* Use your background color */
+/* 3. Force the body to act as a clean flex box wrapper */
+/* body { */
+/* margin: 0; */
+/* height: 100vh; */
+/* display: flex; */
+/* justify-content: center; */
+/* align-items: center; */
+/* background-color: #0b0f19; */
+/* Use your background color */
 
-    .mobile-notice {
-      display: flex;
-      color: white;
-      font-size: 1.25rem;
-      text-align: center;
-    }
-  }
+/* .mobile-notice { */
+/* display: flex; */
+/* color: white; */
+/* font-size: 1.25rem; */
+/* text-align: center; */
+/* } */
+/* } */
 
-  /* 4. Display the single notice element */
-}
+/* 4. Display the single notice element */
+/* } */

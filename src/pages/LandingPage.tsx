@@ -5,8 +5,6 @@ import Footer from "../components/Footer";
 import ArrowDown from "../components/Icons/ArrowDown";
 import VerticalProgress from "../components/VerticalProgress";
 import QuickSignUpPreview from "../components/QuickSignUpPreview.tsx";
-import SpotLight from "../components/landingPageComp/spotLight.tsx";
-
 import "../Style/LandingPageStyle.scss";
 
 export function useInView() {
@@ -206,6 +204,17 @@ const STEPS_DATA = [
 
 export default function LandingPage() {
   const { ref, isInView } = useInView();
+  const section2Ref = useRef<HTMLElement>(null);
+  const cursorGlowRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    if (!section2Ref.current || !cursorGlowRef.current) return;
+    const rect = section2Ref.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    cursorGlowRef.current.style.left = `${x}px`;
+    cursorGlowRef.current.style.top = `${y}px`;
+  };
 
   const scrollToHowItWorks = () => {
     const element = document.getElementById("how-it-works");
@@ -249,7 +258,7 @@ export default function LandingPage() {
       <header>
         <Navbar />
       </header>
-
+      {/*msg for smaller screen*/}
       <div className="mobile-notice">
         Sorryy not ready for smaller screens yet
       </div>
@@ -277,11 +286,10 @@ export default function LandingPage() {
           </div>
         </div>
 
-        <SpotLight />
-
         <div className="canva">
           <Hero3D />
         </div>
+        <div className="light-effect"></div>
 
         <section className="section-1 ">
           <div
@@ -289,7 +297,10 @@ export default function LandingPage() {
             className={`text-container parallax-text ${isInView ? "is-visible" : ""}`}
           >
             <h1>YOU ARE NOT ALONE.</h1>
-            <h2>Find thousands with shared passion and mutual understanding</h2>
+            <p>
+              Connect instantly with peers who share your drive, niche
+              interests, and creative vision.
+            </p>
           </div>
           <div className="bg-shadow"></div>
 
@@ -337,7 +348,12 @@ export default function LandingPage() {
           </h3>
         </section>
 
-        <section className="section-2" id="how-it-works">
+        <section
+          className="section-2"
+          ref={section2Ref}
+          onMouseMove={handleMouseMove}
+          id="how-it-works"
+        >
           <div className="section-header parallax-text">
             <h2>MATCH WITHOUT THE NOISE</h2>
             <p>
@@ -348,6 +364,7 @@ export default function LandingPage() {
           <VerticalProgress steps={STEPS_DATA} />
           {/* Embed the animated preview */}
           <QuickSignUpPreview className="step-1" />
+          <div className="cursor-glow" ref={cursorGlowRef} />
         </section>
       </main>
       <div className="footer">
