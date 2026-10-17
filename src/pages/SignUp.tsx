@@ -10,14 +10,55 @@ export default function SignUp() {
     confirmPassword: "",
   });
 
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSocialSignUp = (provider: string) => {
-    // Redirect to your backend auth endpoint (e.g., /api/auth/google)
     window.location.href = `/api/auth/${provider}`;
   };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMessage("");
+
+    if (formData.password !== formData.confirmPassword) {
+      setErrorMessage("Passwords do not match.");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(
+        "http://192.168.31.160:5000/api/auth/signup",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: formData.username,
+            email: formData.email,
+            password: formData.password,
+          }),
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setErrorMessage(data.message || "Registration failed.");
+      } else {
+        window.location.href = "/dashboard";
+      }
+    } catch (err) {
+      setErrorMessage("Could not connect to the server.");
+    } finally {
+      setIsLoading(false);
+    }
+  }; // <-- Properly closed handleSubmit here!
 
   return (
     <div className="signup-container">
@@ -29,7 +70,8 @@ export default function SignUp() {
           <h1>Create Account</h1>
         </div>
 
-        <form onSubmit={(e) => e.preventDefault()} className="signup-form">
+        <form onSubmit={handleSubmit} className="signup-form">
+          {errorMessage && <div className="error-banner">{errorMessage}</div>}
           <div className="input-group">
             <label htmlFor="username">Username</label>
             <input
@@ -91,7 +133,6 @@ export default function SignUp() {
           <span>OR</span>
         </div>
 
-        {/* Quick Social Logins */}
         <div className="social-buttons">
           <button
             type="button"
